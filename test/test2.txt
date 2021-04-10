@@ -1,0 +1,6 @@
+PatternsDrawer
+3
+==============
+Core:	0-65
+Completion:	65-80
+Challenge:	80-100
