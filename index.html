@@ -4,14 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="css/styles.css" rel="stylesheet">
     <link href="css/bootstrap_container.css" rel="stylesheet">
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="css/styles.css" rel="stylesheet">
+
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
 
     <title>Assignment Marker</title>
 </head>
@@ -25,50 +26,73 @@
         </div>
     </header>
 
-    <!-- FILE SELECTION -->
     <main class="container">
-        <form id="file-selection">
-            <button class="mdc-button mdc-button--raised" id="file-action">
-                <span class="mdc-button__label">Choose File</span>
-            </button>
-            <label class="mdc-text-field mdc-text-field--filled" id="file-name-label">
-                <span class="mdc-text-field__ripple"></span>
-                <span class="mdc-floating-label" id="file-name">No File Chosen</span>
-                <input class="mdc-text-field__input" type="text" aria-labelledby="file-name" disabled="">
-                <span class="mdc-line-ripple"></span>
-            </label>
-            <input type="file" id="read-file">
+        <!-- FILE SELECTION -->
+        <button type="button" class="mdc-button mdc-button--raised" id="file-action" onclick="clickReadFile();">
+            <span class="mdc-button__label">Choose File</span>
+        </button>
+        <label class="mdc-text-field mdc-text-field--filled" id="file-name-label"  onclick="clickReadFile();">
+            <span class="mdc-text-field__ripple"></span>
+            <span class="mdc-floating-label" id="file-name">No File Chosen</span>
+            <input class="mdc-text-field__input" type="text" aria-labelledby="file-name" disabled="">
+            <span class="mdc-line-ripple"></span>
+        </label>
+        <input type="file" id="read-file">
 
-            <button class="mdc-button mdc-button--raised" id="read-file-button">
-                <span class="mdc-button__label">Read File</span>
-            </button>
-        </form>
+        <button type="button" class="mdc-button mdc-button--raised" id="read-file-button">
+            <span class="mdc-button__label">Read File</span>
+        </button>
 
 
+        <!-- CRITERION INPUTS -->
         <div id="file-content">
 
         </div>
 
+        <!-- AUTO GENERATION -->
+        <div id="grade-comments">
+            <button type="button" class="mdc-button mdc-button--raised" id="file-action" onclick="processSchedule();">
+                <span class="mdc-button__label">Generate Grade and Comment</span>
+            </button>
+            <h2>Grades</h2>
+            <label class="mdc-text-field mdc-text-field--outlined">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__notch">
+                        <span class="mdc-floating-label" id="grade"></span>
+                    </span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <input type="number" class="mdc-text-field__input" aria-labelledby="grade" min="0" max="100">
+            </label>
 
-        <div class="mdc-touch-target-wrapper">
-            <div class="mdc-checkbox mdc-checkbox--touch">
-                <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/>
-                <div class="mdc-checkbox__background">
-                    <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                        <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
-                    </svg>
-                    <div class="mdc-checkbox__mixedmark"></div>
-                </div>
-                <div class="mdc-checkbox__ripple"></div>
-            </div>
+            <h2>Comments</h2>
+            <label class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea mdc-text-field--no-label">
+                <span class="mdc-notched-outline">
+                    <span class="mdc-notched-outline__leading"></span>
+                    <span class="mdc-notched-outline__trailing"></span>
+                </span>
+                <span class="mdc-text-field__resizer">
+                    <textarea class="mdc-text-field__input" rows="6" cols="120" aria-label="Label"></textarea>
+                </span>
+            </label>
         </div>
 
+        
+
     </main>
+    <!-- Data Structures -->
+    <script src="js/struct/Criterion.js"></script>
+    <script src="js/struct/Category.js"></script>
+    <script src="js/struct/Schedule.js"></script>
+
+    <!-- Builders -->
+    <script src="js/Builder.js"></script>
     
-    <script src="js/Criterion.js"></script>
-    <script src="js/Category.js"></script>
-    <script src="js/Schedule.js"></script>
+    <!-- Parsers -->
     <script src="js/Parser.js"></script>
     <script src="js/file.js"></script>
+
+    <script src="js/marking.js"></script>
 </body>
 </html>

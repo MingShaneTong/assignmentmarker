@@ -1,5 +1,5 @@
 /**
- * Parses the text input into a schedule object
+ * Static class that parses the text input into a schedule object
  */
 class Parser {
 	/**
@@ -37,7 +37,7 @@ class Parser {
 	 * @return {Category}
 	 */
 	static parseCategory(line){
-		let catexp = /(\w+)\t*:\t*(\d+)-(\d+)/g;
+		let catexp = /(\w+)[ \t]*:[ \t]*(\d+)-(\d+)/g;
 		let captured = catexp.exec(line);
 		let max = Number(captured[3]) - Number(captured[2]);
 		return new Category(captured[1], max);
@@ -52,11 +52,9 @@ class Parser {
 	 * @return {int}	The index of the blank line
 	 */
 	static parseCriterion(category, lines, index){
-		var critexp = /\[(\d+)\]\t*(.+)/g;
-		while(lines[index] != ""){
-			console.log(lines[index]);
+		while(lines[index] != undefined && lines[index].length >= 4){
+			var critexp = /\[(\d+)\][ \t]*(.+)/g;
 			let captured = critexp.exec(lines[index]);
-			console.log(captured);
 			// create criterion
 			category.addCriterion(new Criterion(captured[2], Number(captured[1])));
 			index++;

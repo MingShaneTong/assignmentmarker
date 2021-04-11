@@ -1,13 +1,10 @@
 /* open the file selection for hidden file input */
-document.querySelector("#file-action").addEventListener('click', function() {
-	document.getElementById('read-file').click();
-});
-document.querySelector("#file-name-label").addEventListener('click', function() {
-	document.getElementById('read-file').click();
-});
+function clickReadFile(){
+	$("#read-file").click();
+}
 
 /* change the text in text input */
-document.querySelector("#read-file").addEventListener('change', function() {
+$("#read-file").on('change', function() {
 	if(document.querySelector("#read-file").files.length > 0) {
 		let file = document.querySelector("#read-file").files[0];
 		$("#file-name").text(file.name);
@@ -32,7 +29,8 @@ document.querySelector("#read-file-button").addEventListener('click', function()
 	    let text = e.target.result;
 
 	    let s = Parser.parseText(text);
-	    console.log(s.toString());
+	    Builder.constructSchedule(s, $("#file-content"));
+	    onScheduleLoad();
 	});
 
 	// when file reading fails

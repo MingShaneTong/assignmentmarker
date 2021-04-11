@@ -1,3 +1,10 @@
+:root {
+	--mdc-theme-primary: #123456;
+	--mdc-theme-on-primary: #0abcde;
+	/*--mdc-checkbox-checked-color: #aaaaaa;
+    --mdc-checkbox-ink-color: #aaaaaa;*/
+}
+
 body {
 	margin: 0;
 }
@@ -12,21 +19,35 @@ main {
 }
 
 /* File selection buttons */
-#file-selection #read-file {
+#read-file {
 	display: none;
 }
 
-#file-selection #file-action { 
+#file-action { 
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
 }
 
-#file-selection #file-name-label {
+#file-name-label {
 	height: 36px;
 	position: absolute;
 	width: 24rem;
 }
 
-#file-selection #read-file-button {
+#read-file-button {
 	margin-left: 27rem; 
+}
+
+/* CRITERION BOXES */
+.criterion .mdc-touch-target-wrapper {
+	vertical-align: top;
+}
+
+.criterion .rightcrit {
+	display: inline-block;
+	width: 40rem;
+}
+
+.criterion input[type="range"] {
+	width: 100%;
 }
