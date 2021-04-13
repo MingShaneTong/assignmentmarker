@@ -11,6 +11,7 @@ body {
 
 main {
 	margin-top: 1rem;
+	margin-bottom: 1rem;
 }
 
 .mdc-top-app-bar {
@@ -21,6 +22,10 @@ main {
 /* File selection buttons */
 #read-file {
 	display: none;
+}
+
+#file-content {
+	margin-bottom: 4rem;
 }
 
 #file-action { 
@@ -50,4 +55,16 @@ main {
 
 .criterion input[type="range"] {
 	width: 100%;
+}
+
+#slider-hover {
+	display: none;
+	position: absolute;
+}
+
+
+/* FOOTER */
+footer {
+	width: 100%;
+	height: 8rem;
 }

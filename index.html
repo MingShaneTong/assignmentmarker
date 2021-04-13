@@ -46,11 +46,11 @@
 
         <!-- CRITERION INPUTS -->
         <div id="file-content">
-
+            <div id="slider-hover"></div>
         </div>
 
         <!-- AUTO GENERATION -->
-        <div id="grade-comments">
+        <div id="grade-comments" style="display: none;">
             <button type="button" class="mdc-button mdc-button--raised" id="file-action" onclick="processSchedule();">
                 <span class="mdc-button__label">Generate Grade and Comment</span>
             </button>
@@ -59,11 +59,11 @@
                 <span class="mdc-notched-outline">
                     <span class="mdc-notched-outline__leading"></span>
                     <span class="mdc-notched-outline__notch">
-                        <span class="mdc-floating-label" id="grade"></span>
+                        <span class="mdc-floating-label" id="gradeLabel"></span>
                     </span>
                     <span class="mdc-notched-outline__trailing"></span>
                 </span>
-                <input type="number" class="mdc-text-field__input" aria-labelledby="grade" min="0" max="100">
+                <input type="number" name="grade" id="grade" class="mdc-text-field__input" aria-labelledby="gradeLabel" min="0" max="100">
             </label>
 
             <h2>Comments</h2>
@@ -73,14 +73,16 @@
                     <span class="mdc-notched-outline__trailing"></span>
                 </span>
                 <span class="mdc-text-field__resizer">
-                    <textarea class="mdc-text-field__input" rows="6" cols="120" aria-label="Label"></textarea>
+                    <textarea class="mdc-text-field__input" rows="6" cols="120" aria-label="Label" id="comment" name="comment"></textarea>
                 </span>
             </label>
         </div>
-
-        
-
     </main>
+
+    <footer>
+        
+    </footer>
+
     <!-- Data Structures -->
     <script src="js/struct/Criterion.js"></script>
     <script src="js/struct/Category.js"></script>
