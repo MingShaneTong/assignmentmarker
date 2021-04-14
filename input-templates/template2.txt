@@ -1,0 +1,20 @@
+ExampleTask
+4
+==============
+Minimum: 	0-40
+	[20] the task that need to be completed
+	[15] the task that must be completed
+	[5] explain some things to be
+
+Core:	40-60
+	[12] main part of core
+	[8] some more of core
+
+Completion:	60-80
+	[10] the completion task
+	[10] do more of the completion task
+
+Challenge:	80-100
+	[3] touch ups of the task
+	[9] 1 extra feature
+	[8] what is that? another feature
