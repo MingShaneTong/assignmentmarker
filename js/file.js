@@ -14,7 +14,7 @@ $("#read-file").on('change', function() {
 });
 
 
-document.querySelector("#read-file-button").addEventListener('click', function() {
+function readFile() {
 	if(document.querySelector("#read-file").files.length == 0) {
 		alert('Error : No file selected');
 		return;
@@ -25,6 +25,7 @@ document.querySelector("#read-file-button").addEventListener('click', function()
 
 	// loads the file
 	reader.addEventListener('load', function(e) {
+		$("#file-content").empty();
 	   // contents of the file
 	    let text = e.target.result;
 
@@ -39,4 +40,4 @@ document.querySelector("#read-file-button").addEventListener('click', function()
 	});
 
 	reader.readAsText(file);
-});
+};

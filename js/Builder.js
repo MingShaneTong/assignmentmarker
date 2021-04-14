@@ -29,7 +29,7 @@ class Builder {
 	 * @param {$element}	parent 	The jquery element to add to
 	 */
 	static constructCategory(category, parent){
-		var div = $("<div class=\"category\"></div>");
+		var div = $(`<div class=\"category\" data-max="${category.max}"></div>`);
 		div.append($("<h3>" + category.title + "</h3>"));
 
 		// construct elements for categories
@@ -54,10 +54,30 @@ class Builder {
 		// right side of div
 		var rightdiv = $("<div class=\"rightcrit\"></div>");
 		rightdiv.append($("<p>" + criterion.criterion + "</p>"));
-		rightdiv.append($(`<input type="range" max="`+criterion.points+`" value="0" step="1">`));
+		rightdiv.append(Builder.getSlider(criterion.points));
 
 		div.append(rightdiv);
 		parent.append(div);
+	}
+
+	/**
+	 *
+	 */
+	static getSlider(points){
+		return $(`
+			<div class='sliderBox'>
+				<label class="mdc-text-field mdc-text-field--outlined">
+	                <span class="mdc-notched-outline">
+	                    <span class="mdc-notched-outline__leading"></span>
+	                    <span class="mdc-notched-outline__notch">
+	                        <span class="mdc-floating-label"></span>
+	                    </span>
+	                    <span class="mdc-notched-outline__trailing"></span>
+	                </span>
+	                <input type="number" class="mdc-text-field__input" min="0" max="${points}" value="0">
+	            </label>
+				<input type='range' class='slider' min='0' max='${points}' value='0' steps='1'>
+			</div>`);
 	}
 }
 

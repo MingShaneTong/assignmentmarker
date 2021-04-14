@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 :root {
 	--mdc-theme-primary: #123456;
 	--mdc-theme-on-primary: #0abcde;
@@ -12,6 +15,14 @@ body {
 main {
 	margin-top: 1rem;
 	margin-bottom: 1rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Fira Sans', sans-serif;
+}
+
+p {
+	font-family: 'Roboto', sans-serif;	
 }
 
 .mdc-top-app-bar {
@@ -53,13 +64,18 @@ main {
 	width: 40rem;
 }
 
-.criterion input[type="range"] {
-	width: 100%;
+.sliderBox .slider {
+	width: 75%;
 }
 
-#slider-hover {
-	display: none;
-	position: absolute;
+.sliderBox .mdc-text-field {
+	width: 3.5rem;
+    height: 2rem;
+    padding: 0;
+}
+
+.sliderBox .mdc-text-field .mdc-text-field__input {
+    text-align: right;
 }
 
 

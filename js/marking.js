@@ -2,7 +2,7 @@ function addCriterionListeners(){
 	document.querySelectorAll('.criterion').forEach(item => {
 		$(item).find('input[type="checkbox"]').on("click", onCheck);
 		$(item).find('input[type="range"]').on("change", onSlide);
-		$(item).find('input[type="range"]').on("mouseover", onSlideOver);
+		$(item).find('input[type="number"]').on("input", onVal);
 	})
 }
 
@@ -20,13 +20,14 @@ function getCommentBox(){
  */
 function onCheck(evt){
 	var checkbox = $(evt.target);
+	var sbox = checkbox.closest('.criterion').find('.sliderBox');
 	var range = checkbox.closest('.criterion').find('input[type="range"]');
 
 	if(checkbox.prop("checked")){
 		checkbox.attr("data-indeterminate", false);
-		range.css("display", "none");
+		sbox.css("display", "none");
 	} else {
-		range.css("display", "block");
+		sbox.css("display", "block");
 		range.trigger('change');
 	}
 		
@@ -39,12 +40,15 @@ function onCheck(evt){
 function onSlide(evt){
 	var range = $(evt.target);
 	var checkbox = range.closest('.criterion').find('input[type="checkbox"]');
+	var value = range.closest('.sliderBox').find('input[type="number"]');
+	var val = Number(range.val());
+	var max = Number(range.attr("max"));
 
-	if(range.val() == 0){
+	if(val <= 0){
 		// smallest value
 		checkbox.attr("data-indeterminate", false);
 		checkbox.prop("checked", false);
-	} else if (range.val() == range.attr("max")){
+	} else if (val >= max){
 		// largest value
 		checkbox.attr("data-indeterminate", false);
 		checkbox.prop("checked", true);
@@ -52,24 +56,27 @@ function onSlide(evt){
 		// middle
 		checkbox.attr("data-indeterminate", true);
 	}
+
+	value.val(range.val());
 }
 
 /**
- * When slider is hovered over, create a hovering box that displays the value
+ * When value in box changes, so does the slider
  */
-function onSlideOver(evt){
-	var slider = $(evt.target);
-	var position = slider.position();
-	var width = slider.width();
-	var offset = width * slider.val() / slider.attr("max");
-	var left = position.left + offset;
+function onVal(evt){
+	var value = $(evt.target);
+	var range = value.closest('.sliderBox').find('input[type="range"]');
+	var val = Number(value.val());
+	var max = Number(value.attr("max"));
 
-	// place box over
-	$("#slider-hover").css({
-		"top": position.top,
-		"left": left,
-		"display": "block"
-    });
+	if(val < 0){
+		value.val(0);
+	} else if (val > max){
+		value.val(max);
+	}
+
+	range.val(value.val());
+	range.trigger("change");
 }
 
 /**
@@ -86,6 +93,9 @@ function processSchedule(){
 		var category = $(categories[i]);
 		total += processCategory(category)-0;
 	}
+	if(total > 100)
+		total = 100;
+
 	getGradeBox().val(total);
 }
 
@@ -99,16 +109,19 @@ function processCategory(category){
 	getCommentBox().append(category.find("h3").text() + " - ");
 
 	var criteria = category.children(".criterion");
-	var max = 0;
+	var max = Number(category.attr("data-max"));
 	var total = 0;
 	var comments = [];
 	// get total, max and comments from each criterion
 	for(var j = 0; j < criteria.length; j++){
 		var critresult = processCriterion($(criteria[j]));
 		total += critresult[0]-0;
-		max += critresult[1]-0;
-		comments.push(critresult[2]);
+		comments.push(critresult[1]);
 	}
+
+	// check total is less than the max
+	if(total > max)
+		total = max;
 
 	getCommentBox().append(total + "/" + max +"\n");
 	// print the comments
@@ -130,18 +143,18 @@ function processCriterion(criterion){
 	var checkbox = criterion.find("input[type=\"checkbox\"]");
 	var critTitle = criterion.find("p");
 	var range = criterion.find("input[type=\"range\"]");
-	var max = range.attr("max");
+	var max = Number(range.attr("max"));
 
 	// check the grade of the criterion
 	if(checkbox.attr("data-indeterminate") == "false"){
 		// award full points or no points
 		if(checkbox.prop("checked"))
-			return [max, max, "Completed "+critTitle.text()];
+			return [max, "Completed "+critTitle.text()];
 		else
-			return [0, max, "No attempt at "+critTitle.text()];
+			return [0, "No attempt at "+critTitle.text()];
 	} 
 	// check slider for partial marks
-	return [range.val(), max, "Some attempt at "+critTitle.text()];
+	return [range.val(), "Some attempt at "+critTitle.text()];
 }
 
 
