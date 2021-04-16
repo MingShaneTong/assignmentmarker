@@ -1,11 +1,3 @@
-function addCriterionListeners(){
-	document.querySelectorAll('.criterion').forEach(item => {
-		$(item).find('input[type="checkbox"]').on("click", onCheck);
-		$(item).find('input[type="range"]').on("change", onSlide);
-		$(item).find('input[type="number"]').on("input", onVal);
-	})
-}
-
 function getGradeBox(){
 	return $("#grade");
 }
@@ -15,100 +7,37 @@ function getCommentBox(){
 }
 
 /**
- * When checkbox is clicked and set to checked then hide slider and make indeterminate false
- * If not, display slider and check slider
- */
-function onCheck(evt){
-	var checkbox = $(evt.target);
-	var sbox = checkbox.closest('.criterion').find('.sliderBox');
-	var range = checkbox.closest('.criterion').find('input[type="range"]');
-
-	if(checkbox.prop("checked")){
-		checkbox.attr("data-indeterminate", false);
-		sbox.css("display", "none");
-	} else {
-		sbox.css("display", "block");
-		range.trigger('change');
-	}
-		
-}
-
-/**
- * When slider is changed, if it isn't full marks or no marks
- * Make the checkbox indeterminate
- */
-function onSlide(evt){
-	var range = $(evt.target);
-	var checkbox = range.closest('.criterion').find('input[type="checkbox"]');
-	var value = range.closest('.sliderBox').find('input[type="number"]');
-	var val = Number(range.val());
-	var max = Number(range.attr("max"));
-
-	if(val <= 0){
-		// smallest value
-		checkbox.attr("data-indeterminate", false);
-		checkbox.prop("checked", false);
-	} else if (val >= max){
-		// largest value
-		checkbox.attr("data-indeterminate", false);
-		checkbox.prop("checked", true);
-	} else {
-		// middle
-		checkbox.attr("data-indeterminate", true);
-	}
-
-	value.val(range.val());
-}
-
-/**
- * When value in box changes, so does the slider
- */
-function onVal(evt){
-	var value = $(evt.target);
-	var range = value.closest('.sliderBox').find('input[type="range"]');
-	var val = Number(value.val());
-	var max = Number(value.attr("max"));
-
-	if(val < 0){
-		value.val(0);
-	} else if (val > max){
-		value.val(max);
-	}
-
-	range.val(value.val());
-	range.trigger("change");
-}
-
-/**
  * Generate the grade and comment
+ * @return {Result}
  */
 function processSchedule(){
-	getGradeBox().val('');
-	getCommentBox().text('');
+	var result = new Result();
 
 	var categories = $("#file-content").find(".category");
 	var total = 0;
 	for(var i = 0; i < categories.length; i++){
 		// find the criterion from the category
 		var category = $(categories[i]);
-		total += processCategory(category)-0;
+		total += processCategory(category, result)-0;
 	}
 	if(total > 100)
 		total = 100;
 
-	getGradeBox().val(total);
+	result.setOverall(total);
+	return result;
 }
 
 /**
  * Returns the points awarded for the category
  *
  * @param {$(Category)}	category 	The element of the category
+ * @param {Result}	result 	The result object to add to
  * @return {int}	points awarded to the category
  */
-function processCategory(category){
-	getCommentBox().append(category.find("h3").text() + " - ");
+function processCategory(category, result){
+	var body = category.children(".accordion-body");
 
-	var criteria = category.children(".criterion");
+	var criteria = body.children(".criterion");
 	var max = Number(category.attr("data-max"));
 	var total = 0;
 	var comments = [];
@@ -123,12 +52,13 @@ function processCategory(category){
 	if(total > max)
 		total = max;
 
-	getCommentBox().append(total + "/" + max +"\n");
-	// print the comments
+	result.addCategoryResults(total, max);
+	result.addComment(category.find("h3").text() + " - " + total + "/" + max);
+	// add the comments
 	for(var i = 0; i < comments.length; i++) {
-		getCommentBox().append(comments[i] +"\n");
+		result.addComment(comments[i]);
 	}
-	getCommentBox().append("\n");
+	result.addComment("");
 
 	return total;
 }
@@ -137,7 +67,7 @@ function processCategory(category){
  * Returns the points awarded for the criteria
  *
  * @param {$(Criterion)}	criterion 	The element of the criterion
- * @return {int, int, String}	points awarded, maximum points, comment
+ * @return {int, String}	points awarded, comment
  */
 function processCriterion(criterion){
 	var checkbox = criterion.find("input[type=\"checkbox\"]");
@@ -157,8 +87,13 @@ function processCriterion(criterion){
 	return [range.val(), "Some attempt at "+critTitle.text()];
 }
 
-
-function onScheduleLoad(){
-	addCriterionListeners();
-	$("#grade-comments").css("display", "block");
+function collectGrades(){
+	var result = processSchedule();
+	// add grades to the correct places
+	getGradeBox().val(result.overall);
+	var comment = "";
+	for (var i = 0; i < result.comments.length; i++) {
+		comment += result.comments[i] + "\n";
+	}
+	getCommentBox().val(comment);
 }

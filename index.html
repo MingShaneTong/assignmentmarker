@@ -6,6 +6,7 @@
 
     <link href="css/bootstrap_container.css" rel="stylesheet">
     <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
 
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
@@ -50,7 +51,7 @@
 
         <!-- AUTO GENERATION -->
         <div id="grade-comments" style="display: none;">
-            <button type="button" class="mdc-button mdc-button--raised" id="file-action" onclick="processSchedule();">
+            <button type="button" class="mdc-button mdc-button--raised" id="file-action" onclick="collectGrades();">
                 <span class="mdc-button__label">Generate Grade and Comment</span>
             </button>
             <h2>Grades</h2>
@@ -86,6 +87,7 @@
     <script src="js/struct/Criterion.js"></script>
     <script src="js/struct/Category.js"></script>
     <script src="js/struct/Schedule.js"></script>
+    <script src="js/struct/Result.js"></script>
 
     <!-- Builders -->
     <script src="js/Builder.js"></script>
@@ -93,7 +95,9 @@
     <!-- Parsers -->
     <script src="js/Parser.js"></script>
     <script src="js/file.js"></script>
+    <script src="js/schedule.js"></script>
 
     <script src="js/marking.js"></script>
+    <script src="js/accordion.js"></script>
 </body>
 </html>

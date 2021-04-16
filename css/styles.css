@@ -25,6 +25,10 @@ p {
 	font-family: 'Roboto', sans-serif;	
 }
 
+.fr {
+	float: right;
+}
+
 .mdc-top-app-bar {
 	background: black !important;
 	position: initial !important;
@@ -54,6 +58,29 @@ p {
 	margin-left: 27rem; 
 }
 
+/* ACCORDION */
+.category {
+	margin-bottom: 1rem;
+}
+
+.category .accordion-header {
+	border: 1px solid rgb(0 0 0 / 38%);
+    border-radius: 0.5rem 0.5rem 0 0;
+    padding: 0 4rem;
+}
+.category .accordion-header h3 {
+	display: inline-block;
+}
+.category .accordion-header h4 {
+	display: inline-block;
+}
+.category .accordion-body {
+	border: 1px solid rgb(0 0 0 / 38%);
+    border-radius: 0 0 0.5rem 0.5rem;
+    padding: 1rem 0 2rem 0.8rem;
+}
+
+
 /* CRITERION BOXES */
 .criterion .mdc-touch-target-wrapper {
 	vertical-align: top;
@@ -61,7 +88,7 @@ p {
 
 .criterion .rightcrit {
 	display: inline-block;
-	width: 40rem;
+	width: 50rem;
 }
 
 .sliderBox .slider {

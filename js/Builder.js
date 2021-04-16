@@ -30,14 +30,23 @@ class Builder {
 	 */
 	static constructCategory(category, parent){
 		var div = $(`<div class=\"category\" data-max="${category.max}"></div>`);
-		div.append($("<h3>" + category.title + "</h3>"));
+		// add the accordion header and body
+		div.append($(`
+			<div class="accordion-header">
+				<h3>${category.title}</h3>
+				<div class="fr">
+					<h4><span class="score">0</span>/${category.max}</h4><span class="material-icons">expand_less</span>
+				</div>
+			</div>`));
 
 		// construct elements for categories
+		var accordbody = $(`<div class=\"accordion-body\"></div>`);
 		var criteria = category.criteria;
 		for(var i in criteria) {
-			Builder.constructCriterion(criteria[i], div);
+			Builder.constructCriterion(criteria[i], accordbody);
 		}
 
+		div.append(accordbody);
 		parent.append(div);
 	}
 
